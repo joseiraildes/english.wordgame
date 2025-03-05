@@ -169,7 +169,7 @@ app.post('/check', async (req, res) => {
       SET points = points + ${points}
       WHERE player = '${player}'
     `)
-    console.log(newScore)
+    console.log(updateScore)
     res.redirect('/leaderboard');
 });
 
