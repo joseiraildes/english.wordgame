@@ -51,7 +51,7 @@ app.get('/', async(req, res) => {
       WHERE ipAddress = '${ip}'
     `)
 
-    if(player){
+    if(player[0]["ipAddress"] === ip){
       const randomWord = words[Math.floor(Math.random() * words.length)];
       res.render('game', { word: randomWord.word, isCognate: randomWord.cognate });
     }else{
