@@ -45,17 +45,23 @@ app.get('/', async(req, res) => {
     const ip = await Ip()
     const mysql = await Mysql()
 
-    const [ player, rows ] = await mysql.query(`
-      SELECT *
-      FROM Score
-      WHERE ipAddress = '${ip}'
-    `)
+    // const [ player, rows ] = await mysql.query(`
+    //   SELECT *
+    //   FROM Score
+    //   WHERE ipAddress = '${ip}'
+    // `)
 
-    if(player[0]["ipAddress"] === ip){
+    const player = await Score.findOne({
+      where: {
+        ipAddress: ip
+      }
+    })
+
+    if(player === null){
+      res.redirect("/new/user")
+    }else{
       const randomWord = words[Math.floor(Math.random() * words.length)];
       res.render('game', { word: randomWord.word, isCognate: randomWord.cognate });
-    }else{
-      res.redirect("/new/user")
     }
 });
 // novo usuario
