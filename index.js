@@ -170,10 +170,7 @@ app.post('/check', async (req, res) => {
       SET points = points + ${points}
       WHERE player = '${player}' AND ipAddress = '${ip}'
     `)
-    if(!update){
-      res.send("<script>alert('ERROR!! Não foi possível atualizar sua pontuação.')</script>")
-    }
-    res.send(`<script>alert('Parabéns, você acertou! Voce ganhou ${points} pontos.')</script>`)
+    res.redirect("/leaderboard")
 });
 
 // Placar de líderes
