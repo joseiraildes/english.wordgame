@@ -165,24 +165,18 @@ app.post('/check', async (req, res) => {
     console.log(points)
 
     if(answer === correct){
-      const userUpdate = await Score.update({
-        points: Sequelize.literal(`points + ${points}`)
-      }, {
-        where: {
-          player: player,
-          ipAddress: ip
-        }
-      })
+      let [ success, rows ] = await mysql.query(`
+        UPDATE scores
+        SET points = points + 10
+        WHERE player = '${player}' AND ipAddress = '${ip}'
+      `)
       res.redirect("/leaderboard")
     }else{
-      const userUpdate = await Score.update({
-        points: Sequelize.literal(`points - 5`)
-      }, {
-        where: {
-          player: player,
-          ipAddress: ip
-        }
-      })
+      let [ failure, rows ] = await mysql.query(`
+        UPDATE scores
+        SET points = points - 5
+        WHERE player = '${player}' AND ipAddress = '${ip}'
+      `)
       res.redirect('/leaderboard')
     }
 });
