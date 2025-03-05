@@ -164,13 +164,27 @@ app.post('/check', async (req, res) => {
     const ip = await Ip()
     console.log(points)
 
-    const updateScore = await mysql.query(`
-      UPDATE scores
-      SET points = points + ${points}
-      WHERE player = '${player}'
-    `)
-    console.log(updateScore)
-    res.redirect('/leaderboard');
+    if(answer === correct){
+      const userUpdate = await Score.update({
+        points: Sequelize.literal(`points + ${points}`)
+      }, {
+        where: {
+          player: player,
+          ipAddress: ip
+        }
+      })
+      res.redirect("/leaderboard")
+    }else{
+      const userUpdate = await Score.update({
+        points: Sequelize.literal(`points - 5`)
+      }, {
+        where: {
+          player: player,
+          ipAddress: ip
+        }
+      })
+      res.redirect('/leaderboard')
+    }
 });
 
 // Placar de líderes
