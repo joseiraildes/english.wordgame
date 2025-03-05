@@ -73,13 +73,30 @@ app.post("/new/user", async(req, res)=>{
   const { name } = req.body;
   const mysql = await Mysql()
 
-  const newUser = await mysql.query(`
-    INSERT INTO Score (player, ipAddress)
-    VALUES ('${name}', '${ip}')
-  `)
-  console.log(newUser)
+  const user = await Score.findOne({
+    where: {
+      player: name
+    }
+  })
 
-  res.redirect('/')
+  if(user === null){
+    const newUser = await Score.create({
+      player: name,
+      ipAddress: ip,
+      points: 0
+    })
+    console.log(newUser)
+    res.redirect('/')
+  }else{
+    const userUpdate = await Score.update({
+      ipAddress: ip
+    }, {
+      where: {
+        player: name
+      }
+    })
+    res.redirect("/")
+  }
 })
 // Processar a resposta do jogador
 app.post('/check', async (req, res) => {
