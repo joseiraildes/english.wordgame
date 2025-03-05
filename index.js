@@ -124,7 +124,7 @@ app.post('/check', async (req, res) => {
 app.get('/leaderboard', async(req, res) => {
   const mysql = await Mysql()
 
-  const score = await mysql.query(`SELECT * FROM Score ORDER BY points DESC`)
+  const score = await mysql.query(`SELECT * FROM scores ORDER BY points DESC`)
   console.log(score)
   // const scores = await Score.findAll({ order: [['points', 'DESC']] });
   res.render('leaderboard', { score: score[0] });
