@@ -164,21 +164,16 @@ app.post('/check', async (req, res) => {
     const ip = await Ip()
     console.log(points)
 
-    if(answer === correct){
-      let [ success, rows ] = await mysql.query(`
-        UPDATE scores
-        SET points = points + 10
-        WHERE player = '${player}' AND ipAddress = '${ip}'
-      `)
-      res.redirect("/leaderboard")
-    }else{
-      let [ failure, rows ] = await mysql.query(`
-        UPDATE scores
-        SET points = points - 5
-        WHERE player = '${player}' AND ipAddress = '${ip}'
-      `)
-      res.redirect('/leaderboard')
+    // INSERT POINTS IN MODEL "scores"
+    const [ update, rows ] = mysql.query(`
+      UPDATE Score
+      SET points = points + ${points}
+      WHERE player = '${player}' AND ipAddress = '${ip}'
+    `)
+    if(!update){
+      res.send("<script>alert('ERROR!! Não foi possível atualizar sua pontuação.')</script>")
     }
+    res.send(`<script>alert('Parabéns, você acertou! Voce ganhou ${points} pontos.')</script>`)
 });
 
 // Placar de líderes
