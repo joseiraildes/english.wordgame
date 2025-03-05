@@ -1,0 +1,14 @@
+<h1>Leaderboard</h1>
+<a href="/">Play Again</a>
+<table>
+    <tr>
+        <th>Jogador</th>
+        <th>Pontuação</th>
+    </tr>
+    {{#each score}}
+    <tr>
+        <td>{{player}}</td>
+        <td>{{points}}</td>
+    </tr>
+    {{/each}}
+</table>
