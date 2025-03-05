@@ -113,7 +113,4 @@ app.get('/leaderboard', async(req, res) => {
   res.render('leaderboard', { score: score[0] });
 });
 
-// Sincroniza banco de dados e inicia o servidor
-sequelize.sync().then(() => {
-    app.listen(PORT, () => console.log(`Servidor rodando em http://localhost:${PORT}`));
-});
+app.listen(PORT, () => console.log(`Servidor rodando em http://localhost:${PORT}`));
