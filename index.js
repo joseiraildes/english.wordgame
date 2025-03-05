@@ -53,7 +53,7 @@ app.get('/', async(req, res) => {
 
     if(player){
       const randomWord = words[Math.floor(Math.random() * words.length)];
-      res.render('game', { word: randomWord.word, isCognate: randomWord.cognate, player: player[0]["player"] });
+      res.render('game', { word: randomWord.word, isCognate: randomWord.cognate });
     }else{
       res.redirect("/new/user")
     }
