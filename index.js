@@ -107,12 +107,12 @@ app.post('/check', async (req, res) => {
     console.log(points)
     const playerScore = await mysql.query(`
       SELECT *
-      FROM Score
+      FROM scores
       WHERE player = '${player}' AND ipAddress = '${ip}'
     `)
 
     const newScore = await mysql.query(`
-      UPDATE Score
+      UPDATE scores
       SET points = points + ${points}
       WHERE player = '${player}' AND ipAddress = '${ip}'
     `)
